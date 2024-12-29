@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="~/Content/site.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard</h1>
+        @if ((bool)ViewBag.IsManager)
+        {
+            <p>Welcome @ViewBag.UserName , you are a manager.</p>
+            <a href="@Url.Action("SubmitLeave", "Leave")" class="btn btn-primary">Apply for Leave</a>
+            <a href="@Url.Action("Approval", "Leave")" class="btn btn-primary">Manage Leave Approvals</a>
+        }
+        else
+        {
+            <p>Welcome @ViewBag.UserName </p>
+            <a href="@Url.Action("SubmitLeave", "Leave")" class="btn btn-primary">Apply for Leave</a>
+        }
+    </div>
+</body>
+</html>

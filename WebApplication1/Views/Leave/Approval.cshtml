@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApplication1.Models.LeaveApplication>
+
+<h2>Pending Leave Applications</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Leave Dates</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var leave in Model)
+        {
+            <tr>
+                <td>@leave.Employee.Name</td>
+                <td>@leave.Employee.Department.Name</td>
+                <td>@leave.StartDateTime.ToString("yyyy-MM-dd") - @leave.EndDateTime.ToString("yyyy-MM-dd")</td>
+                <td>@leave.Justification</td>
+                <td>Pending</td>
+                <td>
+                    @Html.ActionLink("Approve", "ApproveLeave", new { leaveId = leave.Id }, new { @class = "btn btn-success" }) |
+                    @Html.ActionLink("Reject", "RejectLeave", new { leaveId = leave.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Add empty space -->
+<div style="height: 20px;"></div>
+
+<!-- Button to go back to Index page -->
+<div class="form-group">
+    @Html.ActionLink("Back", "BackMenu", "", new { @class = "btn btn-primary" })
+</div>
+

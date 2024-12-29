@@ -1,0 +1,29 @@
+﻿@model WebApplication1.ViewModels.LoginViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="~/Content/site.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Add empty space -->
+            <div style="height: 20px;"></div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        }
+    </div>
+</body>
+</html>

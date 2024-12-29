@@ -1,0 +1,85 @@
+﻿@model WebApplication1.ViewModels.SubmitLeaveViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Leave</title>
+    <link rel="stylesheet" href="~/Content/site.css" />
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <style>
+        .divider {
+            margin: 2em 0; /* Adjust the spacing as needed */
+            border: 0;
+            height: 1px;
+            background: #cccccc; /* You can change the color */
+            background-image: linear-gradient(to right, #cccccc, #ffffff, #cccccc);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Leave</h1>
+        @using (Html.BeginForm("SubmitLeave", "Leave", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.StartDateTime)
+                @Html.TextBoxFor(m => m.StartDateTime, new { type = "date", @class = "form-control", min = DateTime.Now.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(m => m.StartDateTime, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EndDateTime)
+                @Html.TextBoxFor(m => m.EndDateTime, new { type = "date", @class = "form-control", min = DateTime.Now.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(m => m.EndDateTime, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Justification)
+                @Html.TextAreaFor(m => m.Justification, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Justification, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ManagerId)
+                @Html.DropDownListFor(m => m.ManagerId, Model.Managers, "Select Manager", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ManagerId, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Empty space -->
+            <div style="height: 20px;"></div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+
+        <!-- Divider -->
+        <hr class="divider" />
+
+        <h2>Leave History</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Justification</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var leave in Model.LeaveApplications)
+                {
+                    <tr>
+                        <td>@leave.StartDateTime.ToShortDateString()</td>
+                        <td>@leave.EndDateTime.ToShortDateString()</td>
+                        <td>@leave.Justification</td>
+                        <td>@leave.LeaveStatus.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group">
+        @Html.ActionLink("Back", "BackMenu", "", new { @class = "btn btn-primary" })
+    </div>
+</body>
+</html>
